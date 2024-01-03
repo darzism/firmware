@@ -253,7 +253,13 @@ voice_assistant:
   on_client_disconnected:
     - lambda: id(voice_assistant_phase) = ${voice_assist_not_ready_phase_id};  
     - script.execute: draw_display
-
+  on_tts_end: # NEW
+  - homeassistant.service:
+      service: media_player.play_media
+      data:
+        entity_id: media_player.vlc_telnet
+        media_content_id: !lambda 'return x;'
+        media_content_type: provider
 
 script:
   - id: draw_display
