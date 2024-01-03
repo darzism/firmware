@@ -220,6 +220,12 @@ voice_assistant:
     - script.execute: draw_display
   on_tts_stream_end:
     - lambda: id(voice_assistant_phase) = ${voice_assist_idle_phase_id};
+    - homeassistant.service:
+      service: media_player.play_media
+      data:
+        entity_id: media_player.vlc_telnet
+        media_content_id: !lambda 'return x;'
+        media_content_type: provider
     - script.execute: draw_display
   on_error:
     - if:
@@ -254,12 +260,12 @@ voice_assistant:
     - lambda: id(voice_assistant_phase) = ${voice_assist_not_ready_phase_id};  
     - script.execute: draw_display
   on_tts_end: # NEW
-  - homeassistant.service:
-      service: media_player.play_media
-      data:
-        entity_id: media_player.vlc_telnet
-        media_content_id: !lambda 'return x;'
-        media_content_type: provider
+#  - homeassistant.service:
+#      service: media_player.play_media
+#      data:
+#        entity_id: media_player.vlc_telnet
+#        media_content_id: !lambda 'return x;'
+#        media_content_type: provider
 
 script:
   - id: draw_display
