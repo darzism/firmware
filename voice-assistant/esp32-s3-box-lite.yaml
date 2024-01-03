@@ -221,11 +221,9 @@ voice_assistant:
   on_tts_stream_end:
     - lambda: id(voice_assistant_phase) = ${voice_assist_idle_phase_id};
     - homeassistant.service:
-      service: media_player.play_media
+      service: script.make_announcement
       data:
-        entity_id: media_player.vlc_telnet
-        media_content_id: !lambda 'return x;'
-        media_content_type: provider
+        announcement_message: !lambda 'return x;'
     - script.execute: draw_display
   on_error:
     - if:
