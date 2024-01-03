@@ -78,7 +78,7 @@ logger:
     sensor: INFO
 
 dashboard_import:
-  package_import_url: github://esphome/firmware/voice-assistant/esp32-s3-box-lite.yaml@main
+  package_import_url: github://darzism/firmware/voice-assistant/esp32-s3-box-lite.yaml@main
 
 wifi:
   ap:
@@ -258,7 +258,10 @@ voice_assistant:
     - lambda: id(voice_assistant_phase) = ${voice_assist_not_ready_phase_id};  
     - script.execute: draw_display
   on_tts_end: # NEW
-#  - homeassistant.service:
+  - homeassistant.service:
+    service: script.make_announcement
+    data:
+      announcement_message: !lambda 'return x;'
 #      service: media_player.play_media
 #      data:
 #        entity_id: media_player.vlc_telnet
